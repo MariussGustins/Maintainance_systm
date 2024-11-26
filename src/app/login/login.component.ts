@@ -1,44 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import {Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  standalone: true,
+  imports: [ReactiveFormsModule], // Add this
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  isLoading = false;
+  serverError = '';
 
-  //test credentials
-  private readonly defaultUsername = 'admin';
-  private readonly defaultPassword = 'admin123';
-
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-    // Initialize the login form
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
-  // Method to handle form submission
   onSubmit(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     const { username, password } = this.loginForm.value;
 
-    // Check if the entered credentials match the default ones
-    if (username === this.defaultUsername && password === this.defaultPassword) {
-      console.log('Login successful!');
-      // Navigate to the main page
-      this.router.navigate(['/main-page']);
-    } else {
-      console.log('Invalid username or password');
-      alert('Invalid username or password');
-    }
+    this.isLoading = true;
+    this.authService.login(username, password).subscribe(
+      (response: any) => {
+        console.log('Login successful', response);
+
+        sessionStorage.setItem('user', JSON.stringify(response));
+        this.router.navigate(['/main-page']);
+      },
+      (error) => {
+        console.error('Login failed', error);
+        this.serverError = 'Invalid username or password';
+        this.isLoading = false;
+      }
+    );
   }
 }

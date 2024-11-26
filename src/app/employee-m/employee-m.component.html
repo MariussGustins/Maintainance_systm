@@ -1,1 +1,26 @@
-<p>employee-m works!</p>
+<div class="employee-container">
+  <h2>Darbinieki</h2>
+
+<!--  Tabula darbinieku datiem-->
+  <table>
+    <thead>
+    <tr>
+      <th>Vārds, Uzvārds</th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>Darbības</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Dinamiska datu apstrade -->
+    <tr *ngFor="let employee of employeesWithIdent">
+      <td>{{ employee.name }} {{ employee.surname }}</td>
+      <td>{{ employee.username }}</td>
+      <td>{{ employee.password }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Ja nav darbinieku -->
+  <p *ngIf="employeesWithIdent.length === 0">Nav pieejami darbinieki.</p>
+</div>

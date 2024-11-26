@@ -1,0 +1,42 @@
+.container {
+  display: flex;
+  border: 1px solid #000;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-right: 16px;
+  width: 120px;
+}
+
+.back-button, .action-button, .folder-button {
+  padding: 8px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.file-container {
+  flex-grow: 1;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  border: 1px solid #000;
+  padding: 8px;
+  cursor: pointer;
+  text-align: left;
+}
+
+td {
+  border: 1px solid #000;
+  padding: 8px;
+}

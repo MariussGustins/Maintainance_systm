@@ -1,16 +1,37 @@
 <div class="login-container">
-  <h2>Uzskaites Sistēma</h2>
+  <h2>Login</h2>
+
+  <!-- Kļūdas paziņojums -->
+  <div *ngIf="serverError" class="error-message">
+    {{ serverError }}
+  </div>
+
   <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+    <!-- Datu ievada -->
     <div>
       <label for="username">Username</label>
-      <input type="text" id="username" formControlName="username" required>
+      <input
+        type="text"
+        id="username"
+        formControlName="username"
+        required
+      />
     </div>
 
+    <!-- Datu ievada -->
     <div>
       <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password" required>
+      <input
+        type="password"
+        id="password"
+        formControlName="password"
+        required
+      />
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <!-- Datu padošana -->
+    <button type="submit" [disabled]="loginForm.invalid || isLoading">
+      Login
+    </button>
   </form>
 </div>

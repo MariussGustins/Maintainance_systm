@@ -1,14 +1,14 @@
 <div class="main-container">
   <div class="sidebar">
     <div class="profile-picture">
-      <div class="circle">Bilde</div>
+      <img [src]="user.pictureUrl" alt="Profile Picture" class="circle" />
     </div>
     <div class="profile-info">
-      <p>Vārds, Uzvārds, amats</p>
+      <p>{{ user.name }}, {{ user.surname }}, {{ user.role }}</p>
     </div>
-    <button>Darba stundas</button>
-    <button>Faili</button>
-    <button>Ekstra 1</button>
+    <button (click)="goToWorkHours()">Darba stundas</button>
+    <button (click)="goToFiles()">Faili</button>
+    <button (click)="goToEmployeeManagement()">Darbinieki</button>
     <button>Ekstra 2</button>
   </div>
 
@@ -28,28 +28,8 @@
         <td>darb</td>
         <td>darb</td>
       </tr>
-      <tr>
-        <td>Projekts 2</td>
-        <td>darb</td>
-        <td>darb</td>
-      </tr>
-      <tr>
-        <td>Projekts 3</td>
-        <td>darb</td>
-        <td>darb</td>
-      </tr>
-      <tr>
-        <td>Projekts 4</td>
-        <td>darb</td>
-        <td>darb</td>
-      </tr>
-      <tr>
-        <td>Projekts 5</td>
-        <td>darb</td>
-        <td>darb</td>
-      </tr>
+      <!-- Add more rows as needed -->
       </tbody>
     </table>
   </div>
 </div>
-

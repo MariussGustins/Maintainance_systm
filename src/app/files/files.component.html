@@ -1,1 +1,31 @@
-<p>files works!</p>
+<div class="container">
+  <div class="sidebar">
+    <button class="back-button">←</button>
+    <button class="action-button">Jauns</button>
+    <!-- Other folder navigation buttons -->
+  </div>
+
+  <div class="file-container">
+    <table>
+      <thead>
+      <tr>
+        <th>Datums ▼</th>
+        <th>Nosaukums ▼</th>
+        <th>Izmērs ▼</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let file of files">
+        <td>{{ file.Date }}</td>
+        <td>{{ file.FileName }}</td>
+        <td>{{ file.FileSize }} KB</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Error message display -->
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+</div>

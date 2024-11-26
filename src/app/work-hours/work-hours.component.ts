@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './work-hours.component.css'
 })
 export class WorkHoursComponent {
-
+  rows = Array(10).fill({});
 }
