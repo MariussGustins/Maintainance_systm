@@ -23,12 +23,14 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Projekts 1</td>
-        <td>darb</td>
-        <td>darb</td>
+      <tr *ngFor="let project of projects">
+        <td>{{ project.projectName }}</td>
+        <td>{{ project.isActive ? 'Aktīvs' : 'Neaktīvs' }}</td>
+        <td>
+          <button (click)="editProject(project.id)">Rediģēt</button>
+          <button (click)="deleteProject(project.id)">Dzēst</button>
+        </td>
       </tr>
-      <!-- Add more rows as needed -->
       </tbody>
     </table>
   </div>

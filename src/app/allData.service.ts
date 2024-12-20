@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {Observable, forkJoin, tap} from 'rxjs';
 import { map } from 'rxjs/operators';
-import {Employee, EmployeeIdent, EmployeeWithIdentDTO, Files} from './allData.interface';
+import {Employee, EmployeeIdent, EmployeeWithIdentDTO, Files, Project} from './allData.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,11 @@ export class AllDataService {
       tap((files) => console.log(`Files fetched for Employee ID ${employeeId}:`, files))
     );
   }
-
+  getAllProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(`${this.apiUrl}/Projects`).pipe(
+      tap((projects) => console.log('Projects fetched:', projects))
+    );
+  }
 
 
 

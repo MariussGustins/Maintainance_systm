@@ -1,16 +1,21 @@
-import { Component,OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AllDataService } from '../allData.service';
+import { Project } from '../allData.interface';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
   imports: [],
   templateUrl: './main-page.component.html',
-  styleUrl: './main-page.component.css'
+  styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  user:any;
-  constructor(private router: Router) {}
+  user: any;
+  projects: Project[] = [];
+
+  constructor(private router: Router, private allDataService: AllDataService) {}
+
   ngOnInit(): void {
     const userData = sessionStorage.getItem('user');
     if (userData) {
@@ -18,14 +23,42 @@ export class MainPageComponent implements OnInit {
     } else {
       this.router.navigate(['/login']); // Redirect to login if not authenticated
     }
+
+    // Iegūt projektus no backend
+    this.loadProjects();
   }
+
+  loadProjects(): void {
+    this.allDataService.getAllProjects().subscribe(
+      (projects) => {
+        this.projects = projects;
+        console.log('Projects loaded:', projects);
+      },
+      (error) => {
+        console.error('Error loading projects:', error);
+      }
+    );
+  }
+
   goToEmployeeManagement() {
     this.router.navigate(['/employee-m']);
   }
-  goToWorkHours(){
+
+  goToWorkHours() {
     this.router.navigate(['/work-hours']);
   }
-  goToFiles(){
+
+  goToFiles() {
     this.router.navigate(['/files']);
+  }
+
+  editProject(projectId: number): void {
+    console.log('Edit project with ID:', projectId);
+
+  }
+
+  deleteProject(projectId: number): void {
+    console.log('Delete project with ID:', projectId);
+
   }
 }
