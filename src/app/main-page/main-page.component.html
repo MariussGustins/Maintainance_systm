@@ -1,10 +1,11 @@
 <div class="main-container">
   <div class="sidebar">
     <div class="profile-picture">
-      <img [src]="user.pictureUrl" alt="Profile Picture" class="circle" />
+      <img [src]="user?.pictureUrl" alt="Profile Picture" class="circle" />
     </div>
     <div class="profile-info">
-      <p>{{ user.name }}, {{ user.surname }}, {{ user.role }}</p>
+      <p>{{ user?.name }} {{ user?.surname }}</p>
+      <p class="role">{{ user?.RoleName }}</p>
     </div>
     <button (click)="goToWorkHours()">Darba stundas</button>
     <button (click)="goToFiles()">Faili</button>
@@ -24,11 +25,15 @@
       </thead>
       <tbody>
       <tr *ngFor="let project of projects">
-        <td>{{ project.projectName }}</td>
-        <td>{{ project.isActive ? 'Aktīvs' : 'Neaktīvs' }}</td>
+        <td>{{ project.ProjectName }}</td>
         <td>
-          <button (click)="editProject(project.id)">Rediģēt</button>
-          <button (click)="deleteProject(project.id)">Dzēst</button>
+            <span class="status" [ngClass]="{ 'active': project.IsActive, 'inactive': !project.IsActive }">
+              {{ project.IsActive ? 'Aktīvs' : 'Neaktīvs' }}
+            </span>
+        </td>
+        <td>
+          <button class="action-btn edit" (click)="editProject(project.Id)">Rediģēt</button>
+          <button class="action-btn delete" (click)="deleteProject(project.Id)">Dzēst</button>
         </td>
       </tr>
       </tbody>

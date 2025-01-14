@@ -1,31 +1,48 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllDataService } from '../allData.service';
-import { Project } from '../allData.interface';
+import {Employee, Project} from '../allData.interface';
+import {NgClass, NgOptimizedImage,CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-main-page',
   standalone: true,
-  imports: [],
+  imports: [
+    NgClass,
+    NgOptimizedImage,
+    CommonModule
+  ],
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
 export class MainPageComponent implements OnInit {
-  user: any;
+  user: Employee | null = null;
   projects: Project[] = [];
 
   constructor(private router: Router, private allDataService: AllDataService) {}
 
   ngOnInit(): void {
-    const userData = sessionStorage.getItem('user');
-    if (userData) {
-      this.user = JSON.parse(userData);
-    } else {
-      this.router.navigate(['/login']); // Redirect to login if not authenticated
+    const userId = sessionStorage.getItem('userId'); // Iegūst ID no sesijas
+    if (!userId) {
+      this.router.navigate(['/login']); // Novirza uz pierakstīšanos, ja ID nav pieejams
+      return;
     }
 
-    // Iegūt projektus no backend
+    // Ielādē lietotāja datus
+    this.loadUserData(parseInt(userId, 10));
+
     this.loadProjects();
+  }
+  loadUserData(employeeId: number): void {
+    this.allDataService.getEmployeeById(employeeId).subscribe(
+      (employee) => {
+        this.user = employee;
+        console.log('User data loaded:', this.user);
+      },
+      (error) => {
+        console.error('Error loading user data:', error);
+      }
+    );
   }
 
   loadProjects(): void {

@@ -38,7 +38,11 @@ export class AllDataService {
     );
   }
 
-
+  getEmployeeById(employeeId: number): Observable<Employee> {
+    return this.http.get<Employee>(`${this.apiUrl}/Employee/${employeeId}`).pipe(
+      tap(employee => console.log(`Employee fetched for ID ${employeeId}:`, employee))
+    );
+  }
 
 
 }

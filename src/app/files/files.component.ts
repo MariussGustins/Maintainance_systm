@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllDataService } from '../allData.service';
 import { Files } from '../allData.interface';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-files',
   standalone: true,
-  imports: [],
+  imports: [
+    NgForOf,
+    NgIf
+  ],
   templateUrl: './files.component.html',
   styleUrls: ['./files.component.css'],
 })

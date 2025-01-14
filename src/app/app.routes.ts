@@ -11,6 +11,7 @@ export const routes: Routes = [
   { path: 'employee-m', component: EmployeeMComponent },
   {path: 'work-hours', component: WorkHoursComponent },
   {path: 'files', component: FilesComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: '**', redirectTo: '/login' }
 ];
 export const routing = RouterModule.forRoot(routes, { useHash: true });

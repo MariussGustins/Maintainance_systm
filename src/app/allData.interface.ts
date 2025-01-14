@@ -1,9 +1,10 @@
 export interface Employee{
   Id: number;
-  Name: string;
-  Surname: string;
+  name: string;
+  surname: string;
   Role_ID: number;
-  PictureUrl: string;
+  RoleName: string;
+  pictureUrl: string;
 }
 
 export interface EmployeeIdent{
