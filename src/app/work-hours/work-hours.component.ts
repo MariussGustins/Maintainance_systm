@@ -23,7 +23,7 @@ export class WorkHoursComponent implements OnInit {
 
   }
   goBack(): void {
-    this.router.navigate(['/main-page']); // Navigate to the main page
+    this.router.navigate(['/main-page']);
   }
   loadFromLocalStorage(): void {
     const storedData = localStorage.getItem('workHours');

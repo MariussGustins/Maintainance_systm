@@ -18,12 +18,12 @@ import {NgForOf, NgIf} from '@angular/common';
   standalone: true
 })
 export class FilesComponent implements OnInit {
-  files: Files[] = []; // Files assigned to the employee
-  user: any; // Logged-in user data
-  errorMessage: string = ''; // Error message display
-  showFileUpload: boolean = false; // Controls file upload modal visibility
-  selectedFile: File | null = null; // Selected file for upload
-  fileDescription: string = ''; // Description for the uploaded file
+  files: Files[] = [];
+  user: any;
+  errorMessage: string = '';
+  showFileUpload: boolean = false;
+  selectedFile: File | null = null;
+  fileDescription: string = '';
 
   constructor(
     private router: Router,
@@ -36,10 +36,10 @@ export class FilesComponent implements OnInit {
     const userData = sessionStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
-      const employeeId = this.user.id; // Assuming `id` corresponds to EmployeeIdentId
+      const employeeId = this.user.id;
       this.fetchFilesForEmployee(employeeId);
     } else {
-      this.router.navigate(['/login']); // Redirect to login if not authenticated
+      this.router.navigate(['/login']);
     }
   }
 
@@ -94,7 +94,7 @@ export class FilesComponent implements OnInit {
     this.http.post(`${this.allDataService.apiUrl}/Files`, formData).subscribe({
       next: () => {
         alert('Fails veiksmīgi augšupielādēts!');
-        this.fetchFilesForEmployee(this.user.id); // Refresh the file list
+        this.fetchFilesForEmployee(this.user.id);
         this.closeFileUpload();
       },
       error: (err) => {
