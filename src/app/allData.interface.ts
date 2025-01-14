@@ -33,21 +33,21 @@ export interface EmployeeRoles{
 
 export interface Files{
   Id:number;
-  FileName: string;
-  FilePath:string;
-  FileSize: number;
-  FileType: string;
-  Date:string;
-  Description: string;
+  fileName: string;
+  filePath:string;
+  fileSize: number;
+  fileType: string;
+  date:string;
+  description: string;
   IsActive:boolean;
   EmployeeIdentId: number;
 }
 
 export interface Project{
   Id: number;
-  ProjectName: string;
-  Description: string;
-  StartDate: string;
-  EndDate: string;
-  IsActive: boolean;
+  projectName: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  isActive: boolean;
 }

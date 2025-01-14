@@ -8,7 +8,7 @@ import {Employee, EmployeeIdent, EmployeeWithIdentDTO, Files, Project} from './a
   providedIn: 'root'
 })
 export class AllDataService {
-  private apiUrl = 'http://localhost:5086/api';
+  public apiUrl = 'http://localhost:5086/api';
 
   constructor(private http: HttpClient) {}
 
@@ -22,6 +22,12 @@ export class AllDataService {
     return this.http.get<EmployeeIdent[]>(`${this.apiUrl}/EmployeeIdent`).pipe(
       tap(idents => console.log('Employee Idents fetched:', idents)) // Log the response
     );
+  }
+  uploadFile(formData: FormData): Observable<any> {
+    return this.http.post<Files[]>(`${this.apiUrl}/Files`, formData);
+  }
+  downloadFile(filePath: string): string {
+    return `${this.apiUrl}/Files/download?filePath=${encodeURIComponent(filePath)}`;
   }
 
   getAllEmployeesWithIdents(): Observable<EmployeeWithIdentDTO[]> {

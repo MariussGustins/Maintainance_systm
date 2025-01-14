@@ -1,7 +1,10 @@
 <div class="employee-container">
-  <h2>Darbinieki</h2>
+  <div class="header">
+    <h2>Darbinieki</h2>
+    <button class="back-button" (click)="goBack()">Atpakaļ</button>
+  </div>
 
-<!--  Tabula darbinieku datiem-->
+  <!-- Tabula darbinieku datiem -->
   <table>
     <thead>
     <tr>
@@ -12,11 +15,15 @@
     </tr>
     </thead>
     <tbody>
-    <!-- Dinamiska datu apstrade -->
-    <tr *ngFor="let employee of employeesWithIdent">
+    <!-- Dinamiska datu apstrāde -->
+    <tr *ngFor="let employee of employeesWithIdent; let i = index">
       <td>{{ employee.name }} {{ employee.surname }}</td>
       <td>{{ employee.username }}</td>
       <td>{{ employee.password }}</td>
+      <td>
+        <button class="action-btn edit" (click)="updateEmployee(i)">Labot</button>
+        <button class="action-btn delete" (click)="deleteEmployee(i)">Dzēst</button>
+      </td>
     </tr>
     </tbody>
   </table>

@@ -1,0 +1,56 @@
+<div class="stock-container">
+  <h2>Office Stock Management</h2>
+
+  <!-- Add New Item Form -->
+  <div class="add-stock-form">
+    <h3>Add New Stock Item</h3>
+    <form (submit)="addStockItem($event)">
+      <input
+        type="text"
+        placeholder="Item Name"
+        [(ngModel)]="newItemName"
+        required
+      />
+      <input
+        type="number"
+        placeholder="Quantity"
+        [(ngModel)]="newItemQuantity"
+        required
+        min="1"
+      />
+      <input
+        type="text"
+        placeholder="Category"
+        [(ngModel)]="newItemCategory"
+        required
+      />
+      <button type="submit">Add Item</button>
+    </form>
+  </div>
+
+  <!-- Stock Table -->
+  <div class="stock-table">
+    <h3>Stock List</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Category</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of stockItems; let i = index">
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.category }}</td>
+        <td>
+          <button (click)="editStockItem(i)">Edit</button>
+          <button (click)="deleteStockItem(i)">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -68,6 +68,9 @@ export class MainPageComponent implements OnInit {
   goToFiles() {
     this.router.navigate(['/files']);
   }
+  goToStock(){
+    this.router.navigate(['/stock']);
+  }
 
   editProject(projectId: number): void {
     console.log('Edit project with ID:', projectId);

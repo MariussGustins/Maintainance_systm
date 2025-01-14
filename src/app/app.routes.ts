@@ -4,6 +4,7 @@ import {MainPageComponent} from './main-page/main-page.component';
 import {EmployeeMComponent} from './employee-m/employee-m.component';
 import {WorkHoursComponent} from './work-hours/work-hours.component';
 import {FilesComponent} from './files/files.component';
+import {StockComponent} from './stock/stock.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -11,6 +12,7 @@ export const routes: Routes = [
   { path: 'employee-m', component: EmployeeMComponent },
   {path: 'work-hours', component: WorkHoursComponent },
   {path: 'files', component: FilesComponent },
+  {path: 'stock', component: StockComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];
