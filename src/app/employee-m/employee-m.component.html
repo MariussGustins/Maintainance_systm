@@ -1,29 +1,40 @@
-<!-- Tabula darbinieku datiem -->
-<table>
-  <thead>
-  <tr>
-    <th>Vārds, Uzvārds</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th>Darbības</th>
-  </tr>
-  </thead>
-  <tbody>
-  <!-- Dinamiski ģenerēts saraksts ar darbiniekiem -->
-  <tr *ngFor="let employee of employeesWithIdent; let i = index">
-    <td>{{ employee.name }} {{ employee.surname }}</td>
-    <td>{{ employee.username }}</td>
-    <td>{{ employee.password }}</td>
-    <td>
-      <!-- Darbinieka labošana -->
-      <button class="action-btn edit" (click)="updateEmployee(i)">Labot</button>
-      <!-- Darbinieka dzēšana -->
-      <button class="action-btn delete" (click)="deleteEmployee(i)">Dzēst</button>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="employee-container">
+  <!-- Galvene ar virsrakstu un atpakaļ pogu -->
+  <div class="header">
+    <h2>Darbinieki</h2>
+    <button class="back-button" (click)="goBack()">Atpakaļ</button>
+  </div>
 
-<!-- Ziņojums, ja nav pieejamu darbinieku -->
-<p *ngIf="employeesWithIdent.length === 0">Nav pieejami darbinieki.</p>
+  <!-- Darbinieku dati tabulas formā -->
+  <table>
+    <thead>
+    <tr>
+      <th>Vārds, Uzvārds</th>
+      <th>Lietotājvārds</th>
+      <th>Parole</th>
+      <th>Darbības</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Dinamiski ģenerēts saraksts ar darbiniekiem -->
+    <tr *ngFor="let employee of employeesWithIdent; let i = index">
+      <td>{{ employee.name }} {{ employee.surname }}</td>
+      <td>{{ employee.username }}</td>
+      <td>
+        <!-- Paroles maskēšana un atklāšanas poga -->
+        <span class="password-mask">******</span>
+        <button class="toggle-password" (click)="togglePassword(i)">👁</button>
+      </td>
+      <td class="action-buttons">
+        <!-- Darbinieka labošana -->
+        <button class="action-btn edit" (click)="updateEmployee(i)">Labot</button>
+        <!-- Darbinieka dzēšana -->
+        <button class="action-btn delete" (click)="deleteEmployee(i)">Dzēst</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
+  <!-- Ziņojums, ja nav pieejamu darbinieku -->
+  <p *ngIf="employeesWithIdent.length === 0" class="no-employees">Nav pieejami darbinieki.</p>
+</div>

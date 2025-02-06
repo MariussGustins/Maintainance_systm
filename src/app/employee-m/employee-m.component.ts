@@ -15,6 +15,9 @@ export class EmployeeMComponent implements OnInit {
   /** Saraksts ar darbiniekiem un to identifikatoriem */
   employeesWithIdent: EmployeeWithIdentDTO[] = [];
 
+  /** Paroļu redzamības statuss */
+  passwordVisibility: boolean[] = [];
+
   constructor(
     private router: Router,
     private allDataService: AllDataService
@@ -34,6 +37,7 @@ export class EmployeeMComponent implements OnInit {
     this.allDataService.getAllEmployeesWithIdents().subscribe({
       next: (data) => {
         this.employeesWithIdent = data;
+        this.passwordVisibility = new Array(data.length).fill(false);
         console.log(data);
       },
       error: (error) => {
@@ -51,6 +55,7 @@ export class EmployeeMComponent implements OnInit {
     if (confirm('Vai tiešām vēlaties dzēst šo darbinieku?')) {
       console.log('Employee deleted:', this.employeesWithIdent[index]);
       this.employeesWithIdent.splice(index, 1);
+      this.passwordVisibility.splice(index, 1);
     }
   }
 
@@ -71,6 +76,14 @@ export class EmployeeMComponent implements OnInit {
       };
       console.log('Employee updated:', this.employeesWithIdent[index]);
     }
+  }
+
+  /**
+   * Pārslēdz paroles redzamību.
+   * @param index - Darbinieka indekss sarakstā.
+   */
+  togglePassword(index: number): void {
+    this.passwordVisibility[index] = !this.passwordVisibility[index];
   }
 
   /**
