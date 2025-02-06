@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./employee-m.component.css']
 })
 export class EmployeeMComponent implements OnInit {
+  /** Saraksts ar darbiniekiem un to identifikatoriem */
   employeesWithIdent: EmployeeWithIdentDTO[] = [];
 
   constructor(
@@ -19,10 +20,16 @@ export class EmployeeMComponent implements OnInit {
     private allDataService: AllDataService
   ) {}
 
+  /**
+   * Komponentes inicializācijas metode, kas izsauc darbinieku saraksta iegūšanu.
+   */
   ngOnInit(): void {
     this.fetchEmployeesAndIdents();
   }
 
+  /**
+   * Iegūst darbinieku sarakstu no servera un saglabā to lokāli.
+   */
   fetchEmployeesAndIdents() {
     this.allDataService.getAllEmployeesWithIdents().subscribe({
       next: (data) => {
@@ -36,13 +43,21 @@ export class EmployeeMComponent implements OnInit {
     });
   }
 
+  /**
+   * Dzēš izvēlēto darbinieku no saraksta.
+   * @param index - Darbinieka indekss sarakstā.
+   */
   deleteEmployee(index: number): void {
     if (confirm('Vai tiešām vēlaties dzēst šo darbinieku?')) {
-      this.employeesWithIdent.splice(index, 1);
       console.log('Employee deleted:', this.employeesWithIdent[index]);
+      this.employeesWithIdent.splice(index, 1);
     }
   }
 
+  /**
+   * Atjaunina izvēlētā darbinieka lietotājvārdu un paroli.
+   * @param index - Darbinieka indekss sarakstā.
+   */
   updateEmployee(index: number): void {
     const employee = this.employeesWithIdent[index];
     const newUsername = prompt('Ievadiet jaunu lietotājvārdu:', employee.username);
@@ -58,6 +73,9 @@ export class EmployeeMComponent implements OnInit {
     }
   }
 
+  /**
+   * Atgriežas uz galveno lapu.
+   */
   goBack(): void {
     this.router.navigate(['/main-page']);
   }

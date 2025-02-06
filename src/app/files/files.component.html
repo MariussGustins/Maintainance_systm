@@ -1,9 +1,12 @@
+
 <div class="container">
+  <!-- Sānjosla ar navigācijas pogām -->
   <div class="sidebar">
     <button class="back-button" (click)="goBack()">← Atpakaļ</button>
     <button class="action-button" (click)="openFileUpload()">Jauns fails</button>
   </div>
 
+  <!-- Failu saraksta konteiners -->
   <div class="file-container">
     <h2>Faili</h2>
     <table>
@@ -16,30 +19,35 @@
       </tr>
       </thead>
       <tbody>
+      <!-- Dinamisks failu saraksts -->
       <tr *ngFor="let file of files">
         <td>{{ file.date }}</td>
         <td>{{ file.fileName }}</td>
         <td>{{ file.fileSize }} KB</td>
         <td>
+          <!-- Lejupielādes poga failam -->
           <button class="download-button" (click)="downloadFile(file.filePath)">Lejupielādēt</button>
         </td>
       </tr>
       </tbody>
     </table>
 
-    <!-- Kļūdu atspoguļošana -->
+    <!-- Kļūdu ziņojumu attēlošana -->
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
   </div>
 
-  <!-- Failu augšupielāde -->
+  <!-- Failu augšupielādes modālais logs -->
   <div class="modal" *ngIf="showFileUpload">
     <div class="modal-content">
       <h3>Pievienot jaunu failu</h3>
       <form (submit)="uploadFile($event)">
+        <!-- Faila izvēle -->
         <input type="file" (change)="onFileSelected($event)" required />
+        <!-- Apraksta ievade -->
         <input type="text" placeholder="Apraksts" [(ngModel)]="fileDescription" required />
+        <!-- Pogas augšupielādei un atcelšanai -->
         <button type="submit">Augšupielādēt</button>
         <button type="button" (click)="closeFileUpload()">Atcelt</button>
       </form>

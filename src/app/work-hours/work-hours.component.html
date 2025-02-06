@@ -1,20 +1,27 @@
 <div class="container">
+  <!-- Galvene ar atgriešanās pogu -->
   <div class="header">
     <button class="back-button" (click)="goBack()">Atgriezties</button>
   </div>
+
+  <!-- Sānjosla ar mērķa uzstādīšanu un stundu pievienošanu -->
   <div class="sidebar">
     <button class="circle" (click)="setGoal()">Uzstādi mērķi</button>
     <button class="circle" (click)="addWorkHours()">Pievienot Stundas</button>
+    <!-- Informācija par noteikto darba stundu mērķi -->
     <div class="goal-info">Mērķis: {{ goal }} stundas</div>
+    <!-- Progresu atspoguļojoša sadaļa -->
     <div class="progress-info">
       Stundas nostrādātas: {{ totalHours }} / {{ goal }} h
     </div>
   </div>
 
+  <!-- Diagrammas konteiners darba stundu progresam -->
   <div class="chart-container">
     <canvas id="progressChart"></canvas>
   </div>
 
+  <!-- Tabula ar darba stundām -->
   <div class="table-container">
     <table>
       <thead>
@@ -25,6 +32,7 @@
       </tr>
       </thead>
       <tbody>
+      <!-- Dinamiski ģenerēta darba stundu tabula -->
       <tr *ngFor="let row of rows">
         <td>{{ row.date }}</td>
         <td>{{ row.task }}</td>

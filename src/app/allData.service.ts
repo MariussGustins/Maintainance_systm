@@ -30,12 +30,24 @@ export class AllDataService {
     return `${this.apiUrl}/Files/download?filePath=${encodeURIComponent(filePath)}`;
   }
 
+
   getAllEmployeesWithIdents(): Observable<EmployeeWithIdentDTO[]> {
     return this.http.get<EmployeeWithIdentDTO[]>(`${this.apiUrl}/Employee/combined`);
   }
   getFilesByEmployeeId(employeeId: number): Observable<Files[]> {
     return this.http.get<Files[]>(`${this.apiUrl}/Files/by-employee/${employeeId}`).pipe(
       tap((files) => console.log(`Files fetched for Employee ID ${employeeId}:`, files))
+    );
+  }
+  updateProject(projectId: number, updatedProject: Project): Observable<Project> {
+    return this.http.put<Project>(`${this.apiUrl}/Projects/${projectId}`, updatedProject).pipe(
+      tap((response) => console.log(`Project with ID ${projectId} updated:`, response))
+    );
+  }
+
+  deleteProject(projectId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/Projects/${projectId}`).pipe(
+      tap(() => console.log(`Project with ID ${projectId} deleted`))
     );
   }
   getAllProjects(): Observable<Project[]> {

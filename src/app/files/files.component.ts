@@ -18,11 +18,17 @@ import {NgForOf, NgIf} from '@angular/common';
   standalone: true
 })
 export class FilesComponent implements OnInit {
+  /** Saraksts ar pieejamajiem failiem */
   files: Files[] = [];
+  /** Pašreizējais lietotājs */
   user: any;
+  /** Kļūdas ziņojums */
   errorMessage: string = '';
+  /** Faila augšupielādes logs */
   showFileUpload: boolean = false;
+  /** Izvēlētais fails */
   selectedFile: File | null = null;
+  /** Faila apraksts */
   fileDescription: string = '';
 
   constructor(
@@ -31,8 +37,10 @@ export class FilesComponent implements OnInit {
     private http: HttpClient
   ) {}
 
+  /**
+   * Komponentes inicializācija - ielādē lietotāja datus un failus.
+   */
   ngOnInit(): void {
-    // Fetch logged-in user from session storage
     const userData = sessionStorage.getItem('user');
     if (userData) {
       this.user = JSON.parse(userData);
@@ -43,6 +51,10 @@ export class FilesComponent implements OnInit {
     }
   }
 
+  /**
+   * Iegūst darbinieka failus no servera.
+   * @param employeeId - Darbinieka ID.
+   */
   fetchFilesForEmployee(employeeId: number): void {
     this.allDataService.getFilesByEmployeeId(employeeId).subscribe({
       next: (data) => {
@@ -56,25 +68,33 @@ export class FilesComponent implements OnInit {
     });
   }
 
+  /** Navigācija atpakaļ uz galveno lapu. */
   goBack(): void {
     this.router.navigate(['/main-page']);
   }
 
+  /** Atver faila augšupielādes logu. */
   openFileUpload(): void {
     this.showFileUpload = true;
   }
 
+  /** Aizver faila augšupielādes logu un atiestata izvēlēto failu. */
   closeFileUpload(): void {
     this.showFileUpload = false;
     this.selectedFile = null;
     this.fileDescription = '';
   }
 
+  /** Saglabā lietotāja izvēlēto failu. */
   onFileSelected(event: any): void {
     this.selectedFile = event.target.files[0];
     console.log('Selected file:', this.selectedFile);
   }
 
+  /**
+   * Augšupielādē failu uz serveri.
+   * @param event - Formas iesniegšanas notikums.
+   */
   uploadFile(event: Event): void {
     event.preventDefault();
 
@@ -104,6 +124,10 @@ export class FilesComponent implements OnInit {
     });
   }
 
+  /**
+   * Lejupielādē failu no servera.
+   * @param filePath - Lejupielādējamā faila ceļš.
+   */
   downloadFile(filePath: string): void {
     const fileUrl = `${this.allDataService.apiUrl}/Files/download?filePath=${encodeURIComponent(filePath)}`;
     window.open(fileUrl, '_blank');

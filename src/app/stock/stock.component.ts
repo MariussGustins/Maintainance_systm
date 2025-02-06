@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {NgForOf} from '@angular/common';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-stock',
@@ -10,17 +10,25 @@ import {NgForOf} from '@angular/common';
   styleUrls: ['./stock.component.css'],
 })
 export class StockComponent implements OnInit {
+  /** Saraksts ar krājumiem */
   stockItems: { name: string; quantity: number; category: string }[] = [];
+  /** Jaunās preces nosaukums */
   newItemName: string = '';
+  /** Jaunās preces daudzums */
   newItemQuantity: number | null = null;
+  /** Jaunās preces kategorija */
   newItemCategory: string = '';
+  /** Rediģēšanas režīms */
   isEditing: boolean = false;
+  /** Rediģējamā ieraksta indekss */
   editingIndex: number | null = null;
 
+  /** Inicializē komponenti un ielādē krājumus no LocalStorage */
   ngOnInit(): void {
     this.loadStockFromLocalStorage();
   }
 
+  /** Ielādē krājumus no LocalStorage */
   loadStockFromLocalStorage(): void {
     const storedStock = localStorage.getItem('stockItems');
     if (storedStock) {
@@ -28,30 +36,52 @@ export class StockComponent implements OnInit {
     }
   }
 
+  /** Saglabā krājumus LocalStorage */
   saveStockToLocalStorage(): void {
     localStorage.setItem('stockItems', JSON.stringify(this.stockItems));
   }
 
+  /**
+   * Pievieno jaunu krājumu vai rediģē esošu.
+   * @param event - Formas iesniegšanas notikums.
+   */
   addStockItem(event: Event): void {
     event.preventDefault();
-    if (!this.newItemName || !this.newItemQuantity || !this.newItemCategory) {
-      alert('Please fill out all fields.');
+
+    console.log('Ievadītās vērtības:', {
+      newItemName: this.newItemName,
+      newItemQuantity: this.newItemQuantity,
+      newItemCategory: this.newItemCategory,
+    });
+
+    // Validācijas loģika
+    if (!this.newItemName || this.newItemName.trim() === '') {
+      alert('Lūdzu aizpildiet preces nosaukuma lauku.');
+      return;
+    }
+    if (this.newItemQuantity === null || this.newItemQuantity <= 0) {
+      alert('Lūdzu ievadiet daudzumu (vairāk par 0).');
+      return;
+    }
+    if (!this.newItemCategory || this.newItemCategory.trim() === '') {
+      alert('Lūdzu aizpildiet kategorijas lauku.');
       return;
     }
 
+    // Datu pievienošana vai rediģēšana
     if (this.isEditing && this.editingIndex !== null) {
       this.stockItems[this.editingIndex] = {
-        name: this.newItemName,
+        name: this.newItemName.trim(),
         quantity: this.newItemQuantity,
-        category: this.newItemCategory,
+        category: this.newItemCategory.trim(),
       };
       this.isEditing = false;
       this.editingIndex = null;
     } else {
       this.stockItems.push({
-        name: this.newItemName,
+        name: this.newItemName.trim(),
         quantity: this.newItemQuantity,
-        category: this.newItemCategory,
+        category: this.newItemCategory.trim(),
       });
     }
 
@@ -59,6 +89,10 @@ export class StockComponent implements OnInit {
     this.resetForm();
   }
 
+  /**
+   * Aktivizē rediģēšanas režīmu konkrētam krājumam.
+   * @param index - Rediģējamā krājuma indekss.
+   */
   editStockItem(index: number): void {
     this.isEditing = true;
     this.editingIndex = index;
@@ -68,14 +102,23 @@ export class StockComponent implements OnInit {
     this.newItemCategory = item.category;
   }
 
+  /**
+   * Dzēš izvēlēto krājumu.
+   * @param index - Dzēšamā krājuma indekss.
+   */
   deleteStockItem(index: number): void {
-    this.stockItems.splice(index, 1);
-    this.saveStockToLocalStorage();
+    if (confirm('Vai tiešām vēlaties dzēst šo krājumu?')) {
+      this.stockItems.splice(index, 1);
+      this.saveStockToLocalStorage();
+    }
   }
 
+  /** Atiestata ievades laukus un atceļ rediģēšanas režīmu */
   resetForm(): void {
     this.newItemName = '';
     this.newItemQuantity = null;
     this.newItemCategory = '';
+    this.isEditing = false;
+    this.editingIndex = null;
   }
 }

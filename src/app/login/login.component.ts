@@ -12,8 +12,11 @@ import { CommonModule } from '@angular/common';
   imports: [ReactiveFormsModule, CommonModule], // Add this
 })
 export class LoginComponent implements OnInit {
+  /** Pieteikšanās forma */
   loginForm!: FormGroup;
+  /** Statuss, kas norāda, vai notiek ielāde */
   isLoading = false;
+  /** Kļūdas ziņojums servera autentifikācijas neveiksmei */
   serverError = '';
 
   constructor(
@@ -22,6 +25,9 @@ export class LoginComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  /**
+   * Komponentes inicializācija - izveido pieteikšanās formas struktūru.
+   */
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
@@ -29,6 +35,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * Apstrādā pieteikšanās pieprasījumu.
+   * Ja forma ir nederīga, funkcija pārtrauc izpildi.
+   */
   onSubmit(): void {
     if (this.loginForm.invalid) {
       return;
@@ -41,6 +51,7 @@ export class LoginComponent implements OnInit {
       (response: any) => {
         console.log('Login successful', response);
 
+        // Saglabā lietotāja informāciju sesijā
         sessionStorage.setItem('userId', response.id.toString());
         sessionStorage.setItem('user', JSON.stringify(response));
         console.log('Navigating to main page...');
@@ -54,3 +65,4 @@ export class LoginComponent implements OnInit {
     );
   }
 }
+

@@ -11,20 +11,30 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./work-hours.component.css'],
 })
 export class WorkHoursComponent implements OnInit {
+  /** Saraksts ar darba stundām */
   rows: { date: string; task: string; hours: number }[] = [];
-  goal: number = 100; // Default goal
+  /** Noklusējuma darba stundu mērķis */
+  goal: number = 100;
+  /** Kopējais nostrādāto stundu skaits */
   totalHours: number = 0;
+  /** Diagrammas objekts */
   chart: any;
+
   constructor(private router: Router) {}
+
+  /** Inicializācijas metode, ielādē saglabātos datus un inicializē diagrammu */
   ngOnInit(): void {
     this.loadFromLocalStorage();
     this.calculateTotalHours();
     this.initializeChart();
-
   }
+
+  /** Navigācija atpakaļ uz galveno lapu */
   goBack(): void {
     this.router.navigate(['/main-page']);
   }
+
+  /** Ielādē darba stundu un mērķu datus no LocalStorage */
   loadFromLocalStorage(): void {
     const storedData = localStorage.getItem('workHours');
     const storedGoal = localStorage.getItem('workHoursGoal');
@@ -38,16 +48,21 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
+  /** Saglabā darba stundu un mērķu datus LocalStorage */
   saveToLocalStorage(): void {
     localStorage.setItem('workHours', JSON.stringify(this.rows));
     localStorage.setItem('workHoursGoal', this.goal.toString());
   }
 
+  /** Aprēķina kopējo nostrādāto stundu skaitu un atjauno diagrammu */
   calculateTotalHours(): void {
     this.totalHours = this.rows.reduce((sum, row) => sum + row.hours, 0);
     this.updateChart();
   }
 
+  /**
+   * Uzstāda jaunu darba stundu mērķi.
+   */
   setGoal(): void {
     const input = prompt('Ievadi stundas cik paredzētas šomēnes:', this.goal.toString());
     if (input) {
@@ -57,6 +72,9 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
+  /**
+   * Pievieno jaunas nostrādātās stundas.
+   */
   addWorkHours(): void {
     const date = prompt('Ievadi datumu (YYYY-MM-DD):', new Date().toISOString().split('T')[0]);
     const task = prompt('Ievadi uzdevumu:', 'Task');
@@ -73,6 +91,7 @@ export class WorkHoursComponent implements OnInit {
     }
   }
 
+  /** Inicializē darba stundu progresu attēlojošo diagrammu */
   initializeChart(): void {
     const ctx = document.getElementById('progressChart') as HTMLCanvasElement;
     this.chart = new Chart(ctx, {
@@ -96,6 +115,7 @@ export class WorkHoursComponent implements OnInit {
     });
   }
 
+  /** Atjauno diagrammu ar jaunākajiem darba stundu datiem */
   updateChart(): void {
     if (this.chart) {
       this.chart.data.datasets[0].data = [

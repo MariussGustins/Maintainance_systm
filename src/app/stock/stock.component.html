@@ -1,53 +1,62 @@
 <div class="stock-container">
-  <h2>Office Stock Management</h2>
+  <h2>Ofisa Krājumu Pārvaldība</h2>
 
-  <!-- Add New Item Form -->
+  <!-- Pievienot jaunu krājumu sadaļa -->
   <div class="add-stock-form">
-    <h3>Add New Stock Item</h3>
+    <h3>Pievienot jaunu krājumu</h3>
     <form (submit)="addStockItem($event)">
+      <!-- Preces nosaukuma ievade -->
       <input
         type="text"
-        placeholder="Item Name"
+        placeholder="Preces nosaukums"
         [(ngModel)]="newItemName"
+        name="itemName"
         required
       />
+      <!-- Daudzuma ievade -->
       <input
         type="number"
-        placeholder="Quantity"
+        placeholder="Daudzums"
         [(ngModel)]="newItemQuantity"
+        name="itemQuantity"
         required
         min="1"
       />
+      <!-- Kategorijas ievade -->
       <input
         type="text"
-        placeholder="Category"
+        placeholder="Kategorija"
         [(ngModel)]="newItemCategory"
+        name="itemCategory"
         required
       />
-      <button type="submit">Add Item</button>
+      <!-- Poga preces pievienošanai -->
+      <button type="submit">Pievienot preci</button>
     </form>
   </div>
 
-  <!-- tabula ar datiem-->
+  <!-- Krājumu saraksta sadaļa -->
   <div class="stock-table">
-    <h3>Stock List</h3>
+    <h3>Krājumu saraksts</h3>
     <table>
       <thead>
       <tr>
-        <th>Item Name</th>
-        <th>Quantity</th>
-        <th>Category</th>
-        <th>Actions</th>
+        <th>Preces nosaukums</th>
+        <th>Daudzums</th>
+        <th>Kategorija</th>
+        <th>Darbības</th>
       </tr>
       </thead>
       <tbody>
+      <!-- Dinamiski veidots krājumu saraksts -->
       <tr *ngFor="let item of stockItems; let i = index">
         <td>{{ item.name }}</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.category }}</td>
         <td>
-          <button (click)="editStockItem(i)">Edit</button>
-          <button (click)="deleteStockItem(i)">Delete</button>
+          <!-- Labot un dzēst pogas -->
+          <button (click)="editStockItem(i)">Labot</button>
+          <button (click)="deleteStockItem(i)">Dzēst</button>
         </td>
       </tr>
       </tbody>
