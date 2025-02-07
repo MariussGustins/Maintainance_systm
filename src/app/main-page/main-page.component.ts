@@ -1,3 +1,9 @@
+/*
+  Autors: Mariuss Gustins
+  Apraksts: Galvenās lapas komponents, kas atbild par lietotāja datu un projektu ielādi,
+            kā arī nodrošina navigāciju uz dažādām pārvaldības sadaļām.
+  Atslēgvārdi: lietotāja dati, projekti, navigācija, darbinieku pārvaldība, inventarizācija
+*/
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllDataService } from '../allData.service';

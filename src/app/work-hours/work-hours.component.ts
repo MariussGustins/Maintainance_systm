@@ -1,3 +1,10 @@
+/**
+ * Autors: Mariuss Gustins
+ * Apraksts: Komponents, kas pārvalda darba stundu pievienošanu, mērķu uzstādīšanu un progresu.
+ *            Iespējama darba stundu ievade un mērķa noteikšana ar vizuālu attēlojumu (diagrammu).
+ *            Dati tiek saglabāti un ielādēti no LocalStorage.
+ * Atslēgvārdi: darba stundas, stundu mērķis, darba stundu pārvaldība, diagramma, LocalStorage
+ */
 import { Component, OnInit } from '@angular/core';
 import { NgForOf, CommonModule } from '@angular/common';
 import { Router } from '@angular/router';

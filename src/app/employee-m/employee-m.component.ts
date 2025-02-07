@@ -4,6 +4,13 @@ import { AllDataService } from '../allData.service';
 import { EmployeeWithIdentDTO } from '../allData.interface';
 import { CommonModule } from '@angular/common';
 
+/**
+ * Autors: Mariuss Gustins
+ * Mērķis: Darbinieku pārvaldības komponents, kas attēlo darbinieku sarakstu,
+ *         atbalsta paroles redzamības pārslēgšanu un nodrošina labošanu/dzēšanu.
+ */
+
+
 @Component({
   selector: 'app-employee-m',
   standalone: true,

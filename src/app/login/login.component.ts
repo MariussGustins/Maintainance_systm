@@ -1,3 +1,10 @@
+/**
+ * Autors: Mariuss Gustins
+ * Apraksts: Pieteikšanās komponents, kas nodrošina lietotāja autentifikāciju,
+ *           formas validāciju un pāreju uz galveno lapu pēc veiksmīgas pieteikšanās.
+ * Atslēgvārdi: pieteikšanās, autentifikācija, lietotājs, formas validācija
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';

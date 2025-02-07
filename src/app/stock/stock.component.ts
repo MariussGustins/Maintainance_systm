@@ -1,3 +1,9 @@
+/**
+ * Autors: Mariuss Gustins
+ * Apraksts: Ofisa krājumu pārvaldības komponents, kas ļauj lietotājam pievienot, rediģēt un dzēst krājumus.
+ *           Dati tiek saglabāti LocalStorage, lai saglabātu izmaiņas pēc lapas pārlādēšanas.
+ * Atslēgvārdi: krājumi, preces, ofisa pārvaldība, inventarizācija, resursu pārvaldība
+ */
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
