@@ -2,8 +2,8 @@ export interface Employee{
   Id: number;
   name: string;
   surname: string;
-  Role_ID: number;
-  RoleName: string;
+  role_Id: number;
+  roleName: string;
   pictureUrl: string;
 }
 
@@ -28,7 +28,7 @@ export interface EmployeeP{
 
 export interface EmployeeRoles{
   Id: number;
-  Rolename: string;
+  roleName: string;
 }
 
 export interface Files{

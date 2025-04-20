@@ -13,49 +13,52 @@
     </div>
     <div class="profile-info">
       <p>{{ user?.name }} {{ user?.surname }}</p>
-      <p class="role">{{ user?.RoleName }}</p>
+      <p class="role">{{ user?.roleName }}</p>
     </div>
-    <!-- Navigācijas pogas -->
-    <button (click)="goToWorkHours()">Darba stundas</button>
-    <button (click)="goToFiles()">Faili</button>
-    <button (click)="goToEmployeeManagement()">Darbinieki</button>
-    <button (click)="goToStock()">Inventarizācija</button>
+
+    <!-- Navigācijas pogas ar ikonām -->
+    <button (click)="goToWorkHours()">
+      <i class="fas fa-clock"></i>
+      Darba stundas
+    </button>
+    <button (click)="goToFiles()">
+      <i class="fas fa-folder-open"></i>
+      Faili
+    </button>
+    <button (click)="goToEmployeeManagement()">
+      <i class="fas fa-users"></i>
+      Darbinieki
+    </button>
+    <button (click)="goToStock()">
+      <i class="fas fa-boxes"></i>
+      Inventarizācija
+    </button>
   </div>
 
-  <!-- Aktuālo projektu sadaļa -->
+  <!-- Aktuālie projekti -->
   <div class="content">
-    <h2>Aktuālie projekti</h2>
-    <table>
-      <thead>
-      <tr>
-        <th>Projekts</th>
-        <th>Apraksts</th>
-        <th>Projekta sākums</th>
-        <th>Projekta beigas</th>
-        <th>Statuss</th>
-        <th>Darbības</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- Dinamisks projektu saraksts -->
-      <tr *ngFor="let project of projects">
-        <td>{{ project.projectName }}</td>
-        <td>{{ project.description }}</td>
-        <td>{{ project.startDate }}</td>
-        <td>{{ project.endDate }}</td>
-        <td>
-          <!-- Statusa indikators -->
+    <div class="projects-header">
+      <h2>📁 Aktuālie projekti</h2>
+      <button class="add-btn" (click)="addProject()">+ Pievienot projektu</button>
+    </div>
+
+    <div class="project-cards">
+      <div class="project-card" *ngFor="let project of projects">
+        <h3>{{ project.projectName }}</h3>
+        <p><strong>Apraksts:</strong> {{ project.description }}</p>
+        <p><strong>Sākums:</strong> {{ project.startDate }}</p>
+        <p><strong>Beigas:</strong> {{ project.endDate }}</p>
+        <p>
+          <strong>Statuss:</strong>
           <span class="status" [ngClass]="{ 'active': project.isActive, 'inactive': !project.isActive }">
-              {{ project.isActive ? 'Aktīvs' : 'Neaktīvs' }}
-            </span>
-        </td>
-        <td>
-          <!-- Projekta rediģēšanas un dzēšanas pogas -->
+          {{ project.isActive ? 'Aktīvs' : 'Neaktīvs' }}
+        </span>
+        </p>
+        <div class="card-actions">
           <button class="action-btn edit" (click)="editProject(project.Id)">Rediģēt</button>
           <button class="action-btn delete" (click)="deleteProject(project.Id)">Dzēst</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -7,7 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllDataService } from '../allData.service';
-import {Employee, Project} from '../allData.interface';
+import {Employee, Project, EmployeeRoles} from '../allData.interface';
 import {NgClass, NgOptimizedImage,CommonModule} from '@angular/common';
 
 @Component({
@@ -40,6 +40,11 @@ export class MainPageComponent implements OnInit {
     }
 
     this.loadUserData(parseInt(userId, 10));
+
+    if (this.user) {
+      this.loadUserRole(this.user.role_Id);
+    }
+
     this.loadProjects();
   }
 
@@ -52,9 +57,38 @@ export class MainPageComponent implements OnInit {
       (employee) => {
         this.user = employee;
         console.log('User data loaded:', this.user);
+
+        // Make sure the Role_ID is valid before calling loadUserRole
+        if (this.user && this.user.role_Id) {
+          this.loadUserRole(this.user.role_Id);
+        } else {
+          console.error('Role_ID is not available in user data');
+        }
       },
       (error) => {
         console.error('Error loading user data:', error);
+      }
+    );
+  }
+// Function to load role by Role_ID
+  loadUserRole(roleId: number): void {
+    if (!roleId) {
+      console.error('Invalid roleId:', roleId);
+      return;
+    }
+
+    this.allDataService.getEmployeeRoleByRoleId(roleId).subscribe(
+      (role) => {
+        console.log('Role fetched:', role);  // Log the fetched role
+        if (this.user) {
+          this.user.roleName = role.roleName;
+        }
+      },
+      (error) => {
+        console.error('Error fetching role data:', error);
+        if (this.user) {
+          this.user.roleName = 'Unknown';  // Fallback if error occurs
+        }
       }
     );
   }
@@ -99,34 +133,40 @@ export class MainPageComponent implements OnInit {
    * @param projectId - Projekta ID.
    */
   editProject(projectId: number): void {
-    const projectToEdit = this.projects.find((project) => project.Id === projectId);
-    if (projectToEdit) {
-      const newProjectName = prompt('Ievadiet jaunu projekta nosaukumu:', projectToEdit.projectName);
-      const newDescription = prompt('Ievadiet jaunu projekta aprakstu:', projectToEdit.description);
-      const newStartDate = prompt('Ievadiet jaunu projekta sākuma datumu (YYYY-MM-DD):', projectToEdit.startDate);
-      const newEndDate = prompt('Ievadiet jaunu projekta beigu datumu (YYYY-MM-DD):', projectToEdit.endDate);
 
-      if (newProjectName && newDescription && newStartDate && newEndDate) {
-        const updatedProject = {
-          ...projectToEdit,
-          projectName: newProjectName,
-          description: newDescription,
-          startDate: newStartDate,
-          endDate: newEndDate,
-        };
+    const project = this.projects.find(p => p.Id === projectId);
+    if (!project) return;
 
-        this.allDataService.updateProject(projectId, updatedProject).subscribe(
-          (response) => {
-            console.log('Project updated:', response);
-            this.loadProjects(); // Atjaunina projektu sarakstu
-          },
-          (error) => {
-            console.error('Error updating project:', error);
-            alert('Neizdevās atjaunināt projektu.');
-          }
-        );
-      }
+    const field = prompt(
+      'Kuru lauku vēlaties rediģēt?\n1 - Nosaukums\n2 - Apraksts\n3 - Sākuma datums\n4 - Beigu datums'
+    );
+
+    let updatedProject = { ...project };
+
+    switch (field) {
+      case '1':
+        const name = prompt('Jaunais nosaukums:', project.projectName);
+        if (name) updatedProject.projectName = name;
+        break;
+      case '2':
+        const desc = prompt('Jaunais apraksts:', project.description);
+        if (desc) updatedProject.description = desc;
+        break;
+      case '3':
+        const start = prompt('Jaunais sākuma datums:', project.startDate);
+        if (start) updatedProject.startDate = start;
+        break;
+      case '4':
+        const end = prompt('Jaunais beigu datums:', project.endDate);
+        if (end) updatedProject.endDate = end;
+        break;
+      default:
+        return;
     }
+
+    this.allDataService.updateProject(projectId, updatedProject).subscribe(() => {
+      this.loadProjects();
+    });
   }
 
   /**
@@ -147,4 +187,28 @@ export class MainPageComponent implements OnInit {
       );
     }
   }
+  addProject(): void {
+    const name = prompt('Ievadiet projekta nosaukumu:');
+    const description = prompt('Ievadiet projekta aprakstu:');
+    const startDate = prompt('Ievadiet sākuma datumu (YYYY-MM-DD):');
+    const endDate = prompt('Ievadiet beigu datumu (YYYY-MM-DD):');
+
+    if (name && description && startDate && endDate) {
+      const newProject: Project = {
+        Id: 0,
+        projectName: name,
+        description,
+        startDate,
+        endDate,
+        isActive: true
+      };
+
+      this.allDataService.createProject(newProject).subscribe(() => {
+        this.loadProjects(); // Pārlādē sarakstu
+      });
+    }
+  }
+
+
 }
+

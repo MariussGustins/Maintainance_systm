@@ -2,22 +2,25 @@
 .main-container {
   display: flex;
   height: 100vh;
+  /*width: 100vw;*/
   background-color: #f9fafb;
   font-family: 'Arial', sans-serif;
 }
 
-/* Sidebar styles */
+/* Sānjosla ar caurspīdīgu fonu un mūsdienīgu dizainu */
 .sidebar {
-  width: 20%;
-  background-color: #2c3e50;
+  width: 240px;
+  background-color: rgba(44, 62, 80, 0.7); /* Caurspīdīgs fons */
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #ecf0f1;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px); /* Efekts fonam */
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/* Profila attēls aplī */
 .profile-picture .circle {
   width: 100px;
   height: 100px;
@@ -34,44 +37,56 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
 }
 
+/* Lietotāja informācija */
 .profile-info {
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   text-align: center;
 }
 
 .profile-info p {
   font-size: 16px;
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .profile-info .role {
-  font-size: 14px;
-  font-weight: bold;
+  font-size: 13px;
+  font-weight: 600;
   color: #bdc3c7;
 }
 
-button {
+/* Navigācijas pogas */
+.sidebar button {
   width: 100%;
-  padding: 12px;
-  margin: 5px 0;
-  background-color: #2980b9;
-  color: white;
+  background-color: transparent;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  color: #ecf0f1;
+  font-size: 16px;
+  text-align: left;
+  padding: 12px 16px;
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  border-radius: 8px;
+  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #3498db;
+.sidebar button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Ikonas */
+.sidebar i {
+  font-size: 18px;
 }
 
 /* Content section */
 .content {
-  width: 80%;
+  width: 100%;
   padding: 40px;
   background-color: #ffffff;
   border-radius: 8px;
@@ -84,6 +99,16 @@ button:hover {
   font-size: 28px;
   color: #2c3e50;
   margin-bottom: 20px;
+}
+.content h3 {
+  text-align: center;
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.content p {
+  color:#2c3e50;
 }
 
 table {
@@ -117,38 +142,61 @@ tbody tr:hover {
   background-color: #ecf0f1;
 }
 
-.status {
-  padding: 4px 8px;
-  border-radius: 4px;
+.projects-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-btn {
+  padding: 8px 16px;
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: bold;
 }
 
-.status.active {
-  color: #27ae60;
-  background-color: #eafaf1;
+.project-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-.status.inactive {
-  color: #e74c3c;
-  background-color: #fdecea;
+.project-card {
+  background-color: rgba(255, 255, 255, 0.05); /* Pieskaņots caurspīdīgajam sidebar */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(8px);
+  color: #ecf0f1;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .action-btn {
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 6px 12px;
   border: none;
-  font-size: 14px;
+  border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .action-btn.edit {
-  background-color: #27ae60;
+  background-color: #3498db;
   color: white;
-}
-
-.action-btn.edit:hover {
-  background-color: #2ecc71;
 }
 
 .action-btn.delete {
@@ -156,6 +204,12 @@ tbody tr:hover {
   color: white;
 }
 
-.action-btn.delete:hover {
-  background-color: #c0392b;
+.status.active {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.status.inactive {
+  color: #e67e22;
+  font-weight: bold;
 }
