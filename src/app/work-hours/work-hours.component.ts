@@ -26,6 +26,8 @@ export class WorkHoursComponent implements OnInit {
   totalHours: number = 0;
   /** Diagrammas objekts */
   chart: any;
+  todayHours: number = 0;
+  weeklyHours: number = 0;
 
   constructor(private router: Router) {}
 
@@ -33,12 +35,36 @@ export class WorkHoursComponent implements OnInit {
   ngOnInit(): void {
     this.loadFromLocalStorage();
     this.calculateTotalHours();
+    this.calculateTodayAndWeeklyHours();
     this.initializeChart();
   }
 
   /** Navigācija atpakaļ uz galveno lapu */
   goBack(): void {
     this.router.navigate(['/main-page']);
+  }
+
+  calculateTodayAndWeeklyHours(): void {
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+    const startOfWeek = this.getMonday(new Date());
+
+    // Šodienas nostrādātās stundas
+    this.todayHours = this.rows
+      .filter(r => r.date === today)
+      .reduce((sum, r) => sum + r.hours, 0);
+
+    // Stundas šajā nedēļā
+    this.weeklyHours = this.rows
+      .filter(r => new Date(r.date) >= startOfWeek)
+      .reduce((sum, r) => sum + r.hours, 0);
+  }
+
+  /** Funkcija, kas iegūst pirmdienu attiecīgajai nedēļai */
+  getMonday(d: Date): Date {
+    const date = new Date(d);
+    const day = date.getDay();
+    const diff = date.getDate() - day + (day === 0 ? -6 : 1); // Pirmdiena
+    return new Date(date.setDate(diff));
   }
 
   /** Ielādē darba stundu un mērķu datus no LocalStorage */

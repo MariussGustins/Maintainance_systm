@@ -23,8 +23,29 @@
   </div>
 
   <!-- Diagrammas konteiners darba stundu progresam -->
+  <div class="chart-wrapper" style="display: flex; gap: 16px;">
   <div class="chart-container">
-    <canvas id="progressChart"></canvas>
+    <canvas id="progressChart" width="500" height="500"></canvas>
+  </div>
+    <div class="summary-box">
+      <h4>Pārskats</h4>
+      <div class="summary-item">
+        <span>Šodien:</span>
+        <span>{{ todayHours }} h</span>
+      </div>
+      <div class="summary-item">
+        <span>Nedēļā:</span>
+        <span>{{ weeklyHours }} h</span>
+      </div>
+      <div class="summary-item">
+        <span>Atlikušas:</span>
+        <span>{{ goal - totalHours }} h</span>
+      </div>
+      <div class="summary-item">
+        <span>Progress:</span>
+        <span>{{ (totalHours / goal * 100) | number:'1.0-0' }}%</span>
+      </div>
+    </div>
   </div>
 
   <!-- Tabula ar darba stundām -->

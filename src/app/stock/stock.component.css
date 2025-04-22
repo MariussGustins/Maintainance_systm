@@ -1,111 +1,155 @@
+:root {
+  --bg-main: #e5e7eb;
+  --bg-card: #ffffff;
+  --primary-color: #3b82f6;
+  --primary-hover: #2563eb;
+  --success-color: #10b981;
+  --success-hover: #059669;
+  --danger-color: #ef4444;
+  --danger-hover: #dc2626;
+  --text-main: #111827;
+  --border: #d1d5db;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-main);
+  margin: 0;
+}
+
 .stock-container {
-  padding: 20px;
-  max-width: 900px;
-  margin: auto;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 960px;
+  margin: 40px auto;
+  background-color: var(--bg-card);
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
 }
 
 h2, h3 {
   text-align: center;
-  color: #333;
+  color: var(--text-main);
+  margin-bottom: 20px;
 }
 
 .add-stock-form {
-  margin-bottom: 20px;
-  padding: 15px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: #e1e1e1;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
 }
 
 .add-stock-form form {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .add-stock-form input {
+  flex: 1 1 calc(33.33% - 10px);
+  min-width: 200px;
   padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
   font-size: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: white;
+  color: var(--text-main);
+}
+
+.add-stock-form input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
 }
 
 .add-stock-form button {
-  padding: 12px;
-  background-color: #4571a0;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  flex: 1 1 100%;
+  padding: 14px;
+  background-color: var(--primary-color);
+  color: black;
   font-size: 16px;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .add-stock-form button:hover {
-  background-color: #365880;
+  background-color: var(--primary-hover);
 }
 
 .stock-table {
-  margin-top: 20px;
-  padding: 15px;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.04);
+  overflow-x: auto;
 }
 
 .stock-table table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
 }
 
-.stock-table th, .stock-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
+.stock-table th,
+.stock-table td {
   text-align: left;
-  font-size: 16px;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
 }
 
 .stock-table th {
-  background-color: #007bff;
-  color: white;
-}
-
-.stock-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+  background-color: var(--primary-color);
+  color: #000000;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
 .stock-table tr:hover {
-  background-color: #eef3f7;
+  background-color: #f1f5f9;
 }
 
 .stock-table button {
   padding: 8px 12px;
-  margin-right: 5px;
+  margin-right: 6px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
+  border-radius: 6px;
   font-size: 14px;
-  transition: background-color 0.3s;
+  color: #a1a1a1;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .stock-table button:first-of-type {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--success-color);
 }
 
 .stock-table button:first-of-type:hover {
-  background-color: #218838;
+  background-color: var(--success-hover);
 }
 
 .stock-table button:last-of-type {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--danger-color);
 }
 
 .stock-table button:last-of-type:hover {
-  background-color: #c82333;
+  background-color: var(--danger-hover);
+}
+.back-button {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 20px;
+  display: inline-block;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
 }

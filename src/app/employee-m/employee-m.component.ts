@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AllDataService } from '../allData.service';
-import { EmployeeWithIdentDTO } from '../allData.interface';
+import { EmployeeWithProject } from '../allData.interface';
 import { CommonModule } from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
 /**
  * Autors: Mariuss Gustins
@@ -14,16 +15,19 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-employee-m',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './employee-m.component.html',
   styleUrls: ['./employee-m.component.css']
 })
 export class EmployeeMComponent implements OnInit {
   /** Saraksts ar darbiniekiem un to identifikatoriem */
-  employeesWithIdent: EmployeeWithIdentDTO[] = [];
+  employeesWithIdent: EmployeeWithProject[] = [];
 
   /** Paroļu redzamības statuss */
   passwordVisibility: boolean[] = [];
+  /** Projektu masivs */
+  projects: any[] = [];
+  selectedEmployeeIndex: number | null = null;
 
   constructor(
     private router: Router,
@@ -35,17 +39,34 @@ export class EmployeeMComponent implements OnInit {
    */
   ngOnInit(): void {
     this.fetchEmployeesAndIdents();
+    this.loadProjects();
+  }
+  loadProjects(): void {
+    this.allDataService.getAllProjects().subscribe(
+      (projects) => {
+        this.projects = projects;
+        console.log('Projects loaded:', projects);
+      },
+      (error) => {
+        console.error('Error loading projects:', error);
+      }
+    );
   }
 
   /**
    * Iegūst darbinieku sarakstu no servera un saglabā to lokāli.
    */
-  fetchEmployeesAndIdents() {
+  fetchEmployeesAndIdents(): void {
     this.allDataService.getAllEmployeesWithIdents().subscribe({
       next: (data) => {
-        this.employeesWithIdent = data;
+        this.employeesWithIdent = data.map((emp) => {
+          const assigned = this.getAssignedProject(emp.username);
+          return {
+            ...emp,
+            project: Array.isArray(assigned) ? assigned : []
+          };
+        });
         this.passwordVisibility = new Array(data.length).fill(false);
-        console.log(data);
       },
       error: (error) => {
         console.error('Error fetching employees with ident data:', error);
@@ -53,6 +74,50 @@ export class EmployeeMComponent implements OnInit {
       }
     });
   }
+
+
+  // funkcija, lai dabūtu piešķirto projektu konkrētam lietotājam
+  getAssignedProject(username: string): number[] {
+    const projectMap = JSON.parse(localStorage.getItem('userProjects') || '{}');
+    return Array.isArray(projectMap[username]) ? projectMap[username] : [];
+  }
+
+  // Izsaucam šo, kad lietotājs izvēlas projektu no dropdown
+  updateProjects(index: number): void {
+    const employee = this.employeesWithIdent[index];
+    if (Array.isArray(employee.project)) {
+      this.assignProjectsToUser(employee.username, employee.project);
+    }
+  }
+  assignProjectsToUser(username: string, projectIds: number[]): void {
+    const projectMap = JSON.parse(localStorage.getItem('userProjects') || '{}');
+    projectMap[username] = projectIds;
+    localStorage.setItem('userProjects', JSON.stringify(projectMap));
+  }
+  onCheckboxChange(employee: EmployeeWithProject, projectId: number, event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (!employee.project) {
+      employee.project = [];
+    }
+
+    if (checkbox.checked) {
+      if (!employee.project.includes(projectId)) {
+        employee.project.push(projectId);
+      }
+    } else {
+      employee.project = employee.project.filter(id => id !== projectId);
+    }
+
+    this.assignProjectsToUser(employee.username, employee.project);
+  }
+
+
+  getProjectNameById(projectId: number | null): string {
+    const project = this.projects.find(p => p.id === projectId);
+    return project ? project.projectName : 'Nezināms projekts';
+  }
+
 
   /**
    * Dzēš izvēlēto darbinieku no saraksta.

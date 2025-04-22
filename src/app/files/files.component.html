@@ -1,9 +1,3 @@
-<!--
-  Autors: Mariuss Gustins
-  Apraksts: Failu pārvaldības komponents, kas ietver failu augšupielādi, lejupielādi,
-            saraksta attēlošanu un kļūdu apstrādi.
-  Atslēgvārdi: faili, augšupielāde, lejupielāde, pārvaldība, sistēma
--->
 <div class="container">
   <!-- Sānjosla ar navigācijas pogām -->
   <div class="sidebar">
@@ -31,7 +25,7 @@
         <td>{{ file.fileSize }} KB</td>
         <td>
           <!-- Lejupielādes poga failam -->
-          <button class="download-button" (click)="downloadFile(file.filePath)">Lejupielādēt</button>
+          <button class="download-button" (click)="downloadFile()">Lejupielādēt</button>
         </td>
       </tr>
       </tbody>
@@ -49,12 +43,21 @@
       <h3>Pievienot jaunu failu</h3>
       <form (submit)="uploadFile($event)">
         <!-- Faila izvēle -->
-        <input type="file" (change)="onFileSelected($event)" required />
+        <input type="file" (change)="onFileSelected($event)" name="file" required />
+
         <!-- Apraksta ievade -->
-        <input type="text" placeholder="Apraksts" [(ngModel)]="fileDescription" required />
-        <!-- Pogas augšupielādei un atcelšanai -->
-        <button type="submit">Augšupielādēt</button>
+        <input type="text" placeholder="Apraksts" [(ngModel)]="fileDescription" name="description" required />
+
+        <!-- Poga augšupielādei -->
+        <button type="submit" [disabled]="!selectedFile || !fileDescription">Augšupielādēt</button>
+
+        <!-- Atcelšanas poga -->
         <button type="button" (click)="closeFileUpload()">Atcelt</button>
+
+        <!-- Kļūdas ziņojums -->
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
       </form>
     </div>
   </div>

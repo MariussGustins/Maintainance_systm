@@ -7,6 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgForOf } from '@angular/common';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-stock',
@@ -28,6 +29,7 @@ export class StockComponent implements OnInit {
   isEditing: boolean = false;
   /** Rediģējamā ieraksta indekss */
   editingIndex: number | null = null;
+  constructor(private router: Router) {}
 
   /** Inicializē komponenti un ielādē krājumus no LocalStorage */
   ngOnInit(): void {
@@ -41,7 +43,10 @@ export class StockComponent implements OnInit {
       this.stockItems = JSON.parse(storedStock);
     }
   }
-
+  /** Navigācija atpakaļ uz galveno lapu */
+  goBack(): void {
+    this.router.navigate(['/main-page']);
+  }
   /** Saglabā krājumus LocalStorage */
   saveStockToLocalStorage(): void {
     localStorage.setItem('stockItems', JSON.stringify(this.stockItems));

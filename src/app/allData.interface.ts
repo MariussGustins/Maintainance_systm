@@ -5,6 +5,7 @@ export interface Employee{
   role_Id: number;
   roleName: string;
   pictureUrl: string;
+
 }
 
 export interface EmployeeIdent{
@@ -44,10 +45,13 @@ export interface Files{
 }
 
 export interface Project{
-  Id: number;
+  id: number;
   projectName: string;
   description: string;
   startDate: string;
   endDate: string;
   isActive: boolean;
+}
+export interface EmployeeWithProject extends EmployeeWithIdentDTO {
+  project?: number[];
 }

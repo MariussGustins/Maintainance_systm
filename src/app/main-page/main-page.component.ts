@@ -10,6 +10,7 @@ import { AllDataService } from '../allData.service';
 import {Employee, Project, EmployeeRoles} from '../allData.interface';
 import {NgClass, NgOptimizedImage,CommonModule} from '@angular/common';
 
+
 @Component({
   selector: 'app-main-page',
   standalone: true,
@@ -26,6 +27,8 @@ export class MainPageComponent implements OnInit {
   user: Employee | null = null;
   /** Saraksts ar projektiem */
   projects: Project[] = [];
+
+
 
   constructor(private router: Router, private allDataService: AllDataService) {}
 
@@ -69,6 +72,7 @@ export class MainPageComponent implements OnInit {
         console.error('Error loading user data:', error);
       }
     );
+
   }
 // Function to load role by Role_ID
   loadUserRole(roleId: number): void {
@@ -134,7 +138,7 @@ export class MainPageComponent implements OnInit {
    */
   editProject(projectId: number): void {
 
-    const project = this.projects.find(p => p.Id === projectId);
+    const project = this.projects.find(p => p.id === projectId);
     if (!project) return;
 
     const field = prompt(
@@ -175,10 +179,13 @@ export class MainPageComponent implements OnInit {
    */
   deleteProject(projectId: number): void {
     if (confirm('Vai tiešām vēlaties dzēst šo projektu?')) {
+      console.log('Projects before deletion:', this.projects);
+
       this.allDataService.deleteProject(projectId).subscribe(
-        (response) => {
-          console.log('Project deleted:', response);
-          this.projects = this.projects.filter((project) => project.Id !== projectId); // Noņem no saraksta
+        () => {
+          console.log(`Project with ID ${projectId} deleted successfully`);
+          this.projects = this.projects.filter(project => project.id !== projectId);
+          console.log('Projects after deletion:', this.projects);
         },
         (error) => {
           console.error('Error deleting project:', error);
@@ -195,7 +202,7 @@ export class MainPageComponent implements OnInit {
 
     if (name && description && startDate && endDate) {
       const newProject: Project = {
-        Id: 0,
+        id: 0,
         projectName: name,
         description,
         startDate,
@@ -208,7 +215,10 @@ export class MainPageComponent implements OnInit {
       });
     }
   }
-
+  getUserProjects(username: string): number[] {
+    const projectMap = JSON.parse(localStorage.getItem('userProjects') || '{}');
+    return Array.isArray(projectMap[username]) ? projectMap[username] : [];
+  }
 
 }
 
