@@ -30,6 +30,10 @@
         placeholder="Enter your password"
         required
       />
+      <!-- Validācijas kļūdas paziņojums -->
+      <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched" class="error-message">
+        Parolei jābūt vismaz 8 simboliem, jāiekļauj lielie un mazie burti, cipari un speciālie simboli.
+      </div>
     </div>
 
     <!-- Pieteikšanās poga -->

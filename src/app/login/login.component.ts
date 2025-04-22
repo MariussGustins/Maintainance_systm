@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent implements OnInit {
   /** Pieteikšanās forma */
-  loginForm!: FormGroup;
+  public loginForm!: FormGroup;
   /** Statuss, kas norāda, vai notiek ielāde */
   isLoading = false;
   /** Kļūdas ziņojums servera autentifikācijas neveiksmei */
@@ -38,7 +38,10 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required],
+      password: ['', [
+        Validators.required,
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)
+      ]],
     });
   }
 
