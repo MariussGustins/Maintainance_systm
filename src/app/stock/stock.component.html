@@ -43,30 +43,19 @@
   </div>
 
   <!-- Krājumu saraksta sadaļa -->
-  <div class="stock-table">
+  <div class="stock-list">
     <h3>Krājumu saraksts</h3>
-    <table>
-      <thead>
-      <tr>
-        <th>Preces nosaukums</th>
-        <th>Daudzums</th>
-        <th>Kategorija</th>
-        <th>Darbības</th>
-      </tr>
-      </thead>
-      <tbody>
-      <!-- Dinamiski veidots krājumu saraksts -->
-      <tr *ngFor="let item of stockItems; let i = index">
-        <td>{{ item.name }}</td>
-        <td>{{ item.quantity }}</td>
-        <td>{{ item.category }}</td>
-        <td>
-          <!-- Labot un dzēst pogas -->
-          <button (click)="editStockItem(i)">Labot</button>
-          <button (click)="deleteStockItem(i)">Dzēst</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="stock-grid">
+      <div class="stock-card" *ngFor="let item of stockItems; let i = index">
+        <h4>{{ item.name }}</h4>
+        <p><strong>Daudzums:</strong> {{ item.quantity }}</p>
+        <p><strong>Kategorija:</strong> {{ item.category }}</p>
+        <div class="card-actions">
+          <button class="edit" (click)="editStockItem(i)">✏️ Labot</button>
+          <button class="delete" (click)="deleteStockItem(i)">🗑 Dzēst</button>
+        </div>
+      </div>
+    </div>
   </div>
+
 </div>

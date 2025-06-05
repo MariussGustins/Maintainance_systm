@@ -18,7 +18,6 @@
       <th>Vārds, Uzvārds</th>
       <th>Lietotājvārds</th>
       <th>Parole</th>
-      <th>Projekti</th>
       <th>Darbības</th>
     </tr>
     </thead>
@@ -33,20 +32,7 @@
         <span *ngIf="passwordVisibility[i]">{{ employee.password }}</span>
         <button class="toggle-password" (click)="togglePassword(i)">👁</button>
       </td>
-      <td>
-        <div class="project-checkboxes">
-          <div *ngFor="let project of projects">
-            <label>
-              <input type="checkbox"
-                     [checked]="employee.project?.includes(project.id)"
-                     (change)="onCheckboxChange(employee, project.id, $event)">
-              {{ project.projectName }}
-            </label>
-          </div>
-        </div>
-      </td>
       <td class="action-buttons">
-
         <!-- Darbinieka dzēšana -->
         <button class="action-btn delete" (click)="deleteEmployee(i)">Dzēst</button>
       </td>

@@ -113,12 +113,6 @@ export class EmployeeMComponent implements OnInit {
   }
 
 
-  getProjectNameById(projectId: number | null): string {
-    const project = this.projects.find(p => p.id === projectId);
-    return project ? project.projectName : 'Nezināms projekts';
-  }
-
-
   /**
    * Dzēš izvēlēto darbinieku no saraksta.
    * @param index - Darbinieka indekss sarakstā.
@@ -164,4 +158,5 @@ export class EmployeeMComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/main-page']);
   }
+
 }

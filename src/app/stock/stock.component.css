@@ -153,3 +153,70 @@ h2, h3 {
   color: var(--primary-hover);
   text-decoration: underline;
 }
+.stock-list {
+  margin-top: 32px;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.stock-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stock-card h4 {
+  font-size: 18px;
+  color: var(--text-main);
+  margin-bottom: 12px;
+}
+
+.stock-card p {
+  margin: 6px 0;
+  color: #4b5563;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.card-actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.card-actions button.edit {
+  background-color: var(--success-color);
+  color: #fff;
+}
+
+.card-actions button.edit:hover {
+  background-color: var(--success-hover);
+}
+
+.card-actions button.delete {
+  background-color: var(--danger-color);
+  color: #fff;
+}
+
+.card-actions button.delete:hover {
+  background-color: var(--danger-hover);
+}
+

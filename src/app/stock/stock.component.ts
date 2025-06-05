@@ -59,14 +59,11 @@ export class StockComponent implements OnInit {
   addStockItem(event: Event): void {
     event.preventDefault();
 
-    console.log('Ievadītās vērtības:', {
-      newItemName: this.newItemName,
-      newItemQuantity: this.newItemQuantity,
-      newItemCategory: this.newItemCategory,
-    });
+    const trimmedName = this.newItemName.trim();
+    const trimmedCategory = this.newItemCategory.trim();
 
-    // Validācijas loģika
-    if (!this.newItemName || this.newItemName.trim() === '') {
+    // Validācija
+    if (!trimmedName) {
       alert('Lūdzu aizpildiet preces nosaukuma lauku.');
       return;
     }
@@ -74,31 +71,45 @@ export class StockComponent implements OnInit {
       alert('Lūdzu ievadiet daudzumu (vairāk par 0).');
       return;
     }
-    if (!this.newItemCategory || this.newItemCategory.trim() === '') {
+    if (!trimmedCategory) {
       alert('Lūdzu aizpildiet kategorijas lauku.');
       return;
     }
 
-    // Datu pievienošana vai rediģēšana
     if (this.isEditing && this.editingIndex !== null) {
+      // Rediģēšana esošajam ierakstam
       this.stockItems[this.editingIndex] = {
-        name: this.newItemName.trim(),
+        name: trimmedName,
         quantity: this.newItemQuantity,
-        category: this.newItemCategory.trim(),
+        category: trimmedCategory,
       };
       this.isEditing = false;
       this.editingIndex = null;
     } else {
-      this.stockItems.push({
-        name: this.newItemName.trim(),
-        quantity: this.newItemQuantity,
-        category: this.newItemCategory.trim(),
-      });
+      // Pārbaude vai jau eksistē ar to pašu nosaukumu un kategoriju
+      const existingItem = this.stockItems.find(
+        item =>
+          item.name.toLowerCase() === trimmedName.toLowerCase() &&
+          item.category.toLowerCase() === trimmedCategory.toLowerCase()
+      );
+
+      if (existingItem) {
+        // Ja jau eksistē — papildini daudzumu
+        existingItem.quantity += this.newItemQuantity;
+      } else {
+        // Ja neeksistē — pievieno jaunu
+        this.stockItems.push({
+          name: trimmedName,
+          quantity: this.newItemQuantity,
+          category: trimmedCategory,
+        });
+      }
     }
 
     this.saveStockToLocalStorage();
     this.resetForm();
   }
+
 
   /**
    * Aktivizē rediģēšanas režīmu konkrētam krājumam.
