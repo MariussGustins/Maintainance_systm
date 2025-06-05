@@ -103,7 +103,13 @@ export class MainPageComponent implements OnInit {
   loadProjects(): void {
     this.allDataService.getAllProjects().subscribe(
       (projects) => {
-        this.projects = projects;
+        const today = new Date();
+        projects.forEach(project => {
+          const projectEndDate = new Date(project.endDate);
+          project.isActive = projectEndDate >= new Date(today.setHours(0, 0, 0, 0));
+        });
+
+        this.projects = projects; // keep your assignment line
         console.log('Projects loaded:', projects);
       },
       (error) => {
