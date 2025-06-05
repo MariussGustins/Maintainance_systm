@@ -33,7 +33,7 @@ h2, h3 {
 }
 
 .add-stock-form {
-  background-color: #e1e1e1;
+  background-color: rgba(44, 62, 80, 0.7);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;

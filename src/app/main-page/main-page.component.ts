@@ -225,6 +225,10 @@ export class MainPageComponent implements OnInit {
     const projectMap = JSON.parse(localStorage.getItem('userProjects') || '{}');
     return Array.isArray(projectMap[username]) ? projectMap[username] : [];
   }
+  logout(): void {
+    sessionStorage.clear(); // Clear all session data
+    this.router.navigate(['/login']); // Redirect to login page
+  }
 
 }
 

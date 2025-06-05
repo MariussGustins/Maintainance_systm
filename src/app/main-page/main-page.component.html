@@ -25,13 +25,18 @@
       <i class="fas fa-folder-open"></i>
       Faili
     </button>
-    <button (click)="goToEmployeeManagement()">
+    <!-- Tikai adminiem -->
+    <button *ngIf="user?.roleName === 'Admin'" (click)="goToEmployeeManagement()">
       <i class="fas fa-users"></i>
       Darbinieki
     </button>
     <button (click)="goToStock()">
       <i class="fas fa-boxes"></i>
       Inventarizācija
+    </button>
+    <button (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      Iziet
     </button>
   </div>
 
